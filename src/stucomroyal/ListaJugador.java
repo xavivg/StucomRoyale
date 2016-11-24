@@ -6,11 +6,11 @@ package stucomroyal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaCartas {
+public class ListaJugador {
 
-    private List<Carta> lista;
+    private List<Jugador> lista;
 
-    public ListaCartas() {
+    public ListaJugador() {
 
         lista = new ArrayList<>();
 

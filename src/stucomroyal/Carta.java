@@ -6,13 +6,13 @@ package stucomroyal;
  */
 public abstract class Carta {
     private String nombre;
-    private Integer costeElixir;
-    private Integer lvlife;
+    private int costeElixir;
+    private int lvlife;
 
     public Carta() {
     }
 
-    public Carta(String nombre, Integer costeElixir, Integer lvlife) {
+    public Carta(String nombre, int costeElixir, int lvlife) {
         this.nombre = nombre;
         this.costeElixir = costeElixir;
         this.lvlife = lvlife;
