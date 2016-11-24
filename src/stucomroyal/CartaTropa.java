@@ -27,6 +27,6 @@ public class CartaTropa extends Carta {
     }
     
 
-    
+    //TODO: Logic code about what does it do
     
 }

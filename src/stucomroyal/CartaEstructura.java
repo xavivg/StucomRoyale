@@ -24,6 +24,7 @@ public class CartaEstructura extends Carta{
     public void setLvlDefense(int lvlDefense) {
         this.lvlDefense = lvlDefense;
     }
+    //TODO: Logic code about what does it do
     
     
 }
