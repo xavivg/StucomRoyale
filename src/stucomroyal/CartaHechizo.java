@@ -35,4 +35,5 @@ public class CartaHechizo extends Carta{
         this.mode = mode;
     }
     //TODO: Logic code about what does it do
+    
 }

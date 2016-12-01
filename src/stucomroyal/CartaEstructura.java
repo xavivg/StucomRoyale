@@ -25,6 +25,10 @@ public class CartaEstructura extends Carta{
         this.lvlDefense = lvlDefense;
     }
     //TODO: Logic code about what does it do
-    
+      public void subirVida(ListaCartas listaCartas){
+        for(Carta carta: listaCartas.getListacartas()){
+            carta.setLvlife(carta.getLvlife()+(this.lvlDefense+8));
+        }
+    }
     
 }

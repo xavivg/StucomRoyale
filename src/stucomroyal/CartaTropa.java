@@ -25,8 +25,11 @@ public class CartaTropa extends Carta {
     public void setLvlattack(int lvlattack) {
         this.lvlattack = lvlattack;
     }
-    
-
     //TODO: Logic code about what does it do
     
+    public void ataca(Carta Enemy){
+       int vidaRes = 0;
+       vidaRes = ((this.lvlattack/2) - Enemy.getLvlife());
+       Enemy.setLvlife(vidaRes);
+   } 
 }
