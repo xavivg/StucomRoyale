@@ -42,7 +42,10 @@ public abstract class Carta {
         this.lvlife = lvlife;
     }
     
-    
+      @Override
+    public String toString() {
+        return "Carta [" + "nombre=" + nombre + ", coste Elixir=" + costeElixir + ", vida=" + lvlife+" ";
+    }
     
     
 }

@@ -31,4 +31,8 @@ public class CartaEstructura extends Carta{
         }
     }
     
+    @Override
+    public String toString() {
+        return super.toString() + "nivel de defensa = " + lvlDefense + ']';
+    }
 }

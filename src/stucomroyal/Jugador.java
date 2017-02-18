@@ -7,14 +7,14 @@ package stucomroyal;
 public class Jugador {
     private String nombre;
     private String password;
-    private String numTrofeos;
-    private ListaCartas listacartas;
+    private int numTrofeos;
+    private ListaCartas listaCartas;
 
-    public Jugador(String nombre, String password, String numTrofeos, ListaCartas listacartas) {
+    public Jugador(String nombre, String password, int numTrofeos) {
         this.nombre = nombre;
         this.password = password;
         this.numTrofeos = numTrofeos;
-        this.listacartas = listacartas;
+        this.listaCartas = new ListaCartas();
     }
 
     public Jugador() {
@@ -36,20 +36,20 @@ public class Jugador {
         this.password = password;
     }
 
-    public String getNumTrofeos() {
+    public int getNumTrofeos() {
         return numTrofeos;
     }
 
-    public void setNumTrofeos(String numTrofeos) {
+    public void setNumTrofeos(int numTrofeos) {
         this.numTrofeos = numTrofeos;
     }
 
-    public ListaCartas getListacartas() {
-        return listacartas;
+    public ListaCartas getListaCartas() {
+        return listaCartas;
     }
 
-    public void setListacartas(ListaCartas listacartas) {
-        this.listacartas = listacartas;
+    public void setListaCartas(ListaCartas listacartas) {
+        this.listaCartas = listacartas;
     }
     
     

@@ -27,9 +27,14 @@ public class CartaTropa extends Carta {
     }
     //TODO: Logic code about what does it do
     
-    public void ataca(Carta Enemy){
+   public void ataca(Carta carta){
        int vidaRes = 0;
-       vidaRes = ((this.lvlattack/2) - Enemy.getLvlife());
-       Enemy.setLvlife(vidaRes);
-   } 
+       vidaRes = (carta.getLvlife()-(this.lvlattack/2));
+       carta.setLvlife(vidaRes);
+   }
+    
+    @Override
+    public String toString() {
+        return super.toString() + "nivel de alcance = " + lvlattack + ']';
+    }
 }
