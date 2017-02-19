@@ -1,9 +1,10 @@
 package stucomroyal;
 
-/**
- *
- * @author usu26
- */
+import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Collections;
+
 public class StucomRoyal {
 
     private static ListaJugador listaJugador = new ListaJugador();
@@ -92,9 +93,11 @@ public class StucomRoyal {
 
                 case 2:
                     //batalla
+                    getPlayers();
                     break;
                 case 3:
                     //ranking jugadores por trofeos desc
+                    Ranking();
                     break;
                 case 4:
                     System.out.println("Bye!");
@@ -113,7 +116,151 @@ public class StucomRoyal {
             System.out.println("No valido!");
         }
     }
+    public static void getPlayers() {//case 2
+        Jugador jugadorUno = getJugador();
+        if (jugadorUno == null || jugadorUno.getListaCartas().getLista().size() != 6) {
+            System.out.println("Algo salió mal con el jugador 1...");
+            if (jugadorUno.getListaCartas().getLista().size() != 6) {
+                System.out.println("El jugador 1 no tiene el numero de cartas necesarias para empezar!");
+            }
+        } else {
+            Jugador jugadorDos = getJugador();
+            if (jugadorDos == null || jugadorDos.getListaCartas().getLista().size() != 6) {
+                System.out.println("Algo salió mal con el jugador 2...");
+                if (jugadorDos.getListaCartas().getLista().size() != 6) {
+                    System.out.println("El jugador 2 no tiene el numero de cartas necesarias para empezar!");
+                }
+            } else {
+                //Login Valido
+                //Seleccionamos cartas de cada jugador
+                getCartasBatalla(jugadorUno, jugadorDos);
+            }
+        }
 
+    }
+    public static void getCartasBatalla(Jugador jugadorUno, Jugador jugadorDos) {
+        
+            System.out.println("Preparando batalla...");
+            cartasBatallaJugadorUno = llenaArraysBatalla(jugadorUno);//obtener cartas y guadarlas en un array para después recrear batalla
+            cartasBatallaJugadorDos = llenaArraysBatalla(jugadorDos);
+            System.out.println("Mazo de batalla de " + jugadorUno.getNombre());
+            System.out.println(cartasBatallaJugadorUno);
+            System.out.println("Mazo de batalla de " + jugadorDos.getNombre());
+            System.out.println(cartasBatallaJugadorDos);
+            System.out.println("-------------Empezamos!---------------");
+
+            simularBatalla(jugadorUno,jugadorDos);
+    }
+    public static ListaCartas llenaArraysBatalla(Jugador jugador){
+        ListaCartas cartasBatalla = new ListaCartas();
+        int contCarta = 0;
+        String cardName = "";
+        System.out.println("Jugador: " + jugador.getNombre() + ", selecciona 3 cartas. Aqui tienes tu lista:");
+        
+        for (Carta cartaActual : jugador.getListaCartas().getLista()) {
+            if (cartaActual instanceof CartaEstructura) {
+                System.out.println(contCarta + ")" + cartaActual.toString());
+            }
+            if (cartaActual instanceof CartaHechizo) {
+                System.out.println(contCarta + ")" + cartaActual.toString());
+            }
+            if (cartaActual instanceof CartaTropa) {
+                System.out.println(contCarta + ")" + cartaActual.toString());
+            }
+            contCarta++;
+        }
+        do{
+            try{                        //take a look after
+            cardName = tools.InputData.pedirCadena("Introduce el nombre de la carta que desees agregar");//falta controlar el coste elixir.
+            //buscamos la carta por nombre
+            Carta carta = jugador.getListaCartas().encontrarCarta(jugador.getNombre());
+            //añadimos la carta
+            cartasBatalla.addCard(carta);
+            System.out.println("Carta agregada!");
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        }while(cartasBatalla.getLista().size() <=3);
+        return cartasBatalla;
+    }
+    private static void simularBatalla(Jugador jugadorUno, Jugador jugadorDos){ //batalla
+        int turno = (int) Math.floor(Math.random() * 2);
+        int selectAtack = (int) Math.floor(Math.random() * 3);
+        
+        if(turno==1){
+            //Empieza jugador1
+            System.out.println("Empiza "+jugadorUno.getNombre());
+            turnoJugadorUno();
+            System.out.println("Turno de  "+jugadorDos.getNombre());
+            turnoJugadorDos();
+            
+        }else{
+            //Empieza jugador2
+            System.out.println("Empiza "+jugadorDos.getNombre());
+            turnoJugadorDos();
+            System.out.println("Turno de  "+jugadorUno.getNombre());
+            turnoJugadorUno();  
+        }
+        
+        
+        
+    }
+    
+       public static void turnoJugadorUno(){
+        int selectAtack = (int) Math.floor(Math.random() * 3);
+        for(Carta cartaActual: cartasBatallaJugadorUno.getLista()){
+                if(cartaActual instanceof CartaTropa){
+                    System.out.println("La carta "+cartaActual.getNombre()+" ataca a "+cartasBatallaJugadorDos.getLista().get(selectAtack).getNombre()+"!");
+                    ((CartaTropa) cartaActual).ataca(cartasBatallaJugadorDos.getLista().get(selectAtack));
+                    
+                    System.out.println("Resultado:");
+                    System.out.println(cartaActual.getNombre()+" "+cartaActual.getLvlife()+"\t"+cartasBatallaJugadorDos.getLista().get(selectAtack).getNombre()+" "+cartasBatallaJugadorDos.getLista().get(selectAtack).getLvlife());
+                    
+                }
+                if(cartaActual instanceof CartaEstructura){
+                    System.out.println("La carta "+cartaActual.getNombre()+" regenera vida al resto de tus cartas!");
+                    ((CartaEstructura) cartaActual).subirVida(cartasBatallaJugadorUno);
+                }
+                if(cartaActual instanceof CartaHechizo){
+                    System.out.println("La carta "+cartaActual.getNombre()+" es activada con el modo"+((CartaHechizo) cartaActual).isMode()+"!");
+                    ((CartaHechizo) cartaActual).activar(cartasBatallaJugadorUno, cartasBatallaJugadorDos);
+                }
+                
+                selectAtack = (int) Math.floor(Math.random() * 3);
+                System.out.println("");
+                
+                System.out.println("-turno-");
+            }
+        
+    }
+    public static void turnoJugadorDos(){
+        int selectAtack = (int) Math.floor(Math.random() * 3);
+        
+        for(Carta cartaActual: cartasBatallaJugadorDos.getLista()){
+                if(cartaActual instanceof CartaTropa){
+                    System.out.println("La carta "+cartaActual.getNombre()+" ataca a "+cartasBatallaJugadorUno.getLista().get(selectAtack).getNombre()+"!");
+                    ((CartaTropa) cartaActual).ataca(cartasBatallaJugadorUno.getLista().get(selectAtack));
+                    
+                    System.out.println("Resultado:");
+                    System.out.println(cartaActual.getNombre()+" "+cartaActual.getLvlife()+"\t"+cartasBatallaJugadorUno.getLista().get(selectAtack).getNombre()+" "+cartasBatallaJugadorUno.getLista().get(selectAtack).getLvlife());
+                }
+                if(cartaActual instanceof CartaEstructura){
+                    System.out.println("La carta "+cartaActual.getNombre()+" regenera vida al resto de tus cartas!");
+                    ((CartaEstructura) cartaActual).subirVida(cartasBatallaJugadorDos);
+                }
+                if(cartaActual instanceof CartaHechizo){
+                    System.out.println("La carta "+cartaActual.getNombre()+" es activada con el modo"+((CartaHechizo) cartaActual).isMode()+"!");
+                    ((CartaHechizo) cartaActual).activar(cartasBatallaJugadorDos, cartasBatallaJugadorUno);
+                }
+                 selectAtack = (int) Math.floor(Math.random() * 3);
+                 System.out.println("");
+                 System.out.println("-turno-");
+            }
+        
+       
+    }
+    
+    
     private static void validUserCards(Jugador jugador) {
         int contCarta = 0;
         int opAddCarta = 0;
@@ -221,6 +368,12 @@ public class StucomRoyal {
             }
         } while (player.getNombre() == null);
         return player;
+    }
+        public static void Ranking(){
+        System.out.println("Ranking:");
+        for(Jugador jugadorActual: listaJugador.getLista()){
+            System.out.println(jugadorActual.getNombre()+" "+jugadorActual.getNumTrofeos());
+        }
     }
 
 }

@@ -1,5 +1,4 @@
-/*
- */
+
 package stucomroyal;
 
 
@@ -30,6 +29,14 @@ public class ListaCartas {
         }else{
             System.out.println("No puedes añadir más de 6 cartas!");
         }
+    }
+     public Carta encontrarCarta(String nombre){
+     for(Carta carta : lista){
+         if(carta.getNombre().equals(nombre) ){
+             return carta;
+         }
+     }
+     return null;
     }
     
     @Override

@@ -1,9 +1,6 @@
-/*
- */
+
 package stucomroyal;
 
-/**
- */
 public abstract class Carta {
     private String nombre;
     private int costeElixir;
@@ -46,6 +43,9 @@ public abstract class Carta {
     public String toString() {
         return "Carta [" + "nombre=" + nombre + ", coste Elixir=" + costeElixir + ", vida=" + lvlife+" ";
     }
-    
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
